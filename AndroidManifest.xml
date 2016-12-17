@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="guepardoapps.guepardonotes"
-    android:versionCode="100160706"
-    android:versionName="1.0.0.160706" >
+    android:versionCode="100161217"
+    android:versionName="1.0.0.161217" >
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="23" />
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,10 +16,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="guepardoapps.guepardonotes.ActivityAdd" >
+        <activity android:name="guepardoapps.guepardonotes.activities.ActivityAdd" >
         </activity>
         <activity
-            android:name="guepardoapps.guepardonotes.ActivityBoot"
+            android:name="guepardoapps.guepardonotes.activities.ActivityBoot"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="guepardoapps.guepardonotes.ActivityDetails" >
+        <activity android:name="guepardoapps.guepardonotes.activities.ActivityDetails" >
         </activity>
-        <activity android:name="guepardoapps.guepardonotes.ActivityImpressum" >
+        <activity android:name="guepardoapps.guepardonotes.activities.ActivityImpressum" >
         </activity>
-        <activity android:name="guepardoapps.guepardonotes.ActivityNotes" >
+        <activity android:name="guepardoapps.guepardonotes.activities.ActivityNotes" >
         </activity>
     </application>
 
