@@ -168,7 +168,7 @@ public class ActivityDetails extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (_networkController.IsNetworkAvailable()) {
-					_mailService.SendMailWithContent(_note.GetTitle(), _note.GetContent());
+					_mailService.SendMailWithContent(_note.GetTitle(), _note.GetContent(), false);
 				} else {
 					Toast.makeText(_context, "Sorry, no network available!", Toast.LENGTH_SHORT).show();
 				}

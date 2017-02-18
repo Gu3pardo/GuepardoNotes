@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="guepardoapps.guepardonotes"
-    android:versionCode="100161217"
-    android:versionName="1.0.0.161217" >
+    android:versionCode="101"
+    android:versionName="1.0.1.170218" >
 
     <uses-sdk
         android:minSdkVersion="17"
