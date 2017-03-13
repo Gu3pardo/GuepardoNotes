@@ -78,9 +78,9 @@ public final class R {
 		public static final int floating_message_background = 0x7f090006;
 		public static final int floating_message_text = 0x7f090008;
 		public static final int floating_message_title = 0x7f090007;
-		public static final int toast_icon = 0x7f09001c;
-		public static final int toast_root = 0x7f09001b;
-		public static final int toast_text = 0x7f09001d;
+		public static final int toast_icon = 0x7f09001e;
+		public static final int toast_root = 0x7f09001d;
+		public static final int toast_text = 0x7f09001f;
 	}
 	public static final class layout {
 		public static final int custom_dialog_1 = 0x7f030000;

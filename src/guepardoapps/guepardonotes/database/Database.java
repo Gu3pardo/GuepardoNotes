@@ -8,19 +8,18 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import guepardoapps.guepardonotes.common.Constants;
+import guepardoapps.guepardonotes.common.constants.DatabaseConstants;
 import guepardoapps.guepardonotes.model.Note;
 
 public class Database {
 
-	public static final String KEY_ROWID = Constants.DATABASE_KEY_ROWID;
-	public static final String KEY_TITLE = Constants.DATABASE_KEY_TITLE;
-	public static final String KEY_NOTES = Constants.DATABASE_KEY_NOTES;
+	public static final String KEY_ROWID = DatabaseConstants.DATABASE_KEY_ROWID;
+	public static final String KEY_TITLE = DatabaseConstants.DATABASE_KEY_TITLE;
+	public static final String KEY_NOTES = DatabaseConstants.DATABASE_KEY_NOTES;
 
-	private static final String DATABASE_NAME = Constants.DATABASE_NAME;
-	private static final String DATABASE_TABLE = Constants.DATABASE_TABLE;
-	private static final int DATABASE_VERSION = Constants.DATABASE_VERSION;
+	private static final String DATABASE_NAME = DatabaseConstants.DATABASE_NAME;
+	private static final String DATABASE_TABLE = DatabaseConstants.DATABASE_TABLE;
+	private static final int DATABASE_VERSION = DatabaseConstants.DATABASE_VERSION;
 
 	private DatabaseHelper _databaseHelper;
 	private final Context _context;
@@ -48,7 +47,7 @@ public class Database {
 		}
 
 		public void Remove(Context context) {
-			context.deleteDatabase(Constants.DATABASE_NAME);
+			context.deleteDatabase(DatabaseConstants.DATABASE_NAME);
 		}
 	}
 

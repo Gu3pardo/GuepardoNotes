@@ -13,14 +13,18 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import guepardoapps.guepardonotes.R;
-import guepardoapps.guepardonotes.common.Constants;
+import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.DatabaseController;
 import guepardoapps.guepardonotes.customadapter.NoteListAdapter;
 import guepardoapps.guepardonotes.model.Note;
 
-import guepardoapps.toolset.services.NavigationService;
+import guepardoapps.toolset.common.Logger;
+import guepardoapps.toolset.controller.NavigationController;
 
 public class ActivityNotes extends Activity {
+
+	private static final String TAG = ActivityNotes.class.getSimpleName();
+	private Logger _logger;
 
 	private ArrayList<Note> _noteList;
 
@@ -33,17 +37,20 @@ public class ActivityNotes extends Activity {
 	private Context _context;
 
 	private DatabaseController _databaseController;
-	private NavigationService _navigationService;
+	private NavigationController _navigationController;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.side_main);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Constants.ACTION_BAR_COLOR));
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Colors.ACTION_BAR_COLOR));
+
+		_logger = new Logger(TAG, Enables.DEBUGGING_ENABLED);
+		_logger.Debug("onCreate");
 
 		_context = this;
 		_databaseController = new DatabaseController(_context);
-		_navigationService = new NavigationService(_context);
+		_navigationController = new NavigationController(_context);
 
 		_listView = (ListView) findViewById(R.id.listView);
 		_progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -52,7 +59,9 @@ public class ActivityNotes extends Activity {
 		_btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				_navigationService.NavigateTo(ActivityAdd.class, true);
+				_logger.Debug("_btnAdd onClick");
+
+				_navigationController.NavigateTo(ActivityAdd.class, true);
 			}
 		});
 
@@ -60,7 +69,9 @@ public class ActivityNotes extends Activity {
 		_btnImpressum.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				_navigationService.NavigateTo(ActivityImpressum.class, true);
+				_logger.Debug("_btnImpressum onClick");
+
+				_navigationController.NavigateTo(ActivityImpressum.class, true);
 			}
 		});
 
@@ -69,6 +80,9 @@ public class ActivityNotes extends Activity {
 
 	protected void onResume() {
 		super.onResume();
+
+		_logger.Debug("onResume");
+
 		if (_created) {
 			_noteList = _databaseController.GetNotes();
 
@@ -77,15 +91,5 @@ public class ActivityNotes extends Activity {
 			_progressBar.setVisibility(View.GONE);
 			_listView.setVisibility(View.VISIBLE);
 		}
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 	}
 }

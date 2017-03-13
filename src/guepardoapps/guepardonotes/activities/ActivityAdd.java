@@ -15,15 +15,20 @@ import android.widget.EditText;
 import android.widget.Scroller;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 import guepardoapps.guepardonotes.R;
-import guepardoapps.guepardonotes.common.*;
+import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.DatabaseController;
 import guepardoapps.guepardonotes.model.Note;
 
+import guepardoapps.toolset.common.Logger;
 import guepardoapps.toolset.controller.*;
-import guepardoapps.toolset.services.NavigationService;
 
 public class ActivityAdd extends Activity {
+
+	private static final String TAG = ActivityAdd.class.getSimpleName();
+	private Logger _logger;
 
 	private String _title;
 	private String _content;
@@ -36,28 +41,32 @@ public class ActivityAdd extends Activity {
 
 	private DatabaseController _databaseController;
 	private DialogController _dialogController;
-	private NavigationService _navigationService;
+	private NavigationController _navigationController;
 
-	private Runnable trySaveNewNoteCallback = new Runnable() {
+	private Runnable _trySaveNewNoteCallback = new Runnable() {
 		public void run() {
+			_logger.Debug("_trySaveNewNoteCallback run");
+
 			if (_title == "") {
-				Toast.makeText(_context, "Please enter a title!", Toast.LENGTH_SHORT).show();
+				Toasty.error(_context, "Please enter a title!", Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			if (_content == "") {
-				Toast.makeText(_context, "Please enter a note!", Toast.LENGTH_SHORT).show();
+				Toasty.error(_context, "Please enter a note!", Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			_databaseController.SaveNote(new Note(0, _title, _content, 0, 0, 0));
-			finishCallback.run();
+			_finishCallback.run();
 		}
 	};
 
-	private Runnable finishCallback = new Runnable() {
+	private Runnable _finishCallback = new Runnable() {
 		public void run() {
-			_navigationService.NavigateTo(ActivityNotes.class, true);
+			_logger.Debug("_finishCallback run");
+
+			_navigationController.NavigateTo(ActivityNotes.class, true);
 		}
 	};
 
@@ -66,14 +75,17 @@ public class ActivityAdd extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.side_add);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Constants.ACTION_BAR_COLOR));
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Colors.ACTION_BAR_COLOR));
+
+		_logger = new Logger(TAG, Enables.DEBUGGING_ENABLED);
+		_logger.Debug("onCreate");
 
 		_context = this;
 
 		_databaseController = new DatabaseController(_context);
 		_dialogController = new DialogController(_context, getResources().getColor(R.color.TextIcon),
 				getResources().getColor(R.color.Primary));
-		_navigationService = new NavigationService(_context);
+		_navigationController = new NavigationController(_context);
 
 		_editTitle = (EditText) findViewById(R.id.addTitle);
 		_editTitle.addTextChangedListener(new TextWatcher() {
@@ -117,23 +129,28 @@ public class ActivityAdd extends Activity {
 		_btnSave.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				trySaveNewNoteCallback.run();
+				_logger.Debug("_btnSave onClick");
+
+				_trySaveNewNoteCallback.run();
 			}
 		});
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		_logger.Debug("onKeyDown");
+
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (_title != null || _content != null) {
 				_dialogController.ShowDialogTriple("Warning!",
-						"The created note is not saved! Do you want to save the note?", "Yes", trySaveNewNoteCallback,
-						"No", finishCallback, "Cancel", _dialogController.CloseDialogCallback, true);
+						"The created note is not saved! Do you want to save the note?", "Yes", _trySaveNewNoteCallback,
+						"No", _finishCallback, "Cancel", _dialogController.CloseDialogCallback, true);
 			} else {
-				finishCallback.run();
+				_finishCallback.run();
 			}
 			return true;
 		}
+
 		return super.onKeyDown(keyCode, event);
 	}
 }

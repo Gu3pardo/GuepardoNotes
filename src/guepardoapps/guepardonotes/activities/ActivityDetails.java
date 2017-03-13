@@ -16,17 +16,23 @@ import android.widget.ImageButton;
 import android.widget.Scroller;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 import guepardoapps.guepardonotes.R;
-import guepardoapps.guepardonotes.common.*;
+import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.*;
 import guepardoapps.guepardonotes.model.Note;
 
+import guepardoapps.toolset.common.Logger;
 import guepardoapps.toolset.controller.DialogController;
+import guepardoapps.toolset.controller.MailController;
+import guepardoapps.toolset.controller.NavigationController;
 import guepardoapps.toolset.controller.NetworkController;
-import guepardoapps.toolset.services.MailService;
-import guepardoapps.toolset.services.NavigationService;
 
 public class ActivityDetails extends Activity {
+
+	private static final String TAG = ActivityDetails.class.getSimpleName();
+	private Logger _logger;
 
 	private boolean _noteEdited;
 	private Note _note;
@@ -42,25 +48,25 @@ public class ActivityDetails extends Activity {
 
 	private DatabaseController _databaseController;
 	private DialogController _dialogController;
-	private MailService _mailService;
-	private NavigationService _navigationService;
+	private MailController _mailController;
+	private NavigationController _navigationController;
 	private NetworkController _networkController;
 
-	private Runnable updateNoteCallback = new Runnable() {
+	private Runnable _updateNoteCallback = new Runnable() {
 		public void run() {
 			_databaseController.UpdateNote(_note);
 			resetEditable();
 		}
 	};
 
-	private Runnable deleteNoteCallback = new Runnable() {
+	private Runnable _deleteNoteCallback = new Runnable() {
 		public void run() {
 			_databaseController.DeleteNote(_note);
-			_navigationService.NavigateTo(ActivityNotes.class, true);
+			_navigationController.NavigateTo(ActivityNotes.class, true);
 		}
 	};
 
-	private Runnable showOriginalNoteCallback = new Runnable() {
+	private Runnable _showOriginalNoteCallback = new Runnable() {
 		public void run() {
 			_note = _originalNote;
 			resetEditable();
@@ -74,7 +80,10 @@ public class ActivityDetails extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.side_details);
-		getActionBar().setBackgroundDrawable(new ColorDrawable(Constants.ACTION_BAR_COLOR));
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Colors.ACTION_BAR_COLOR));
+
+		_logger = new Logger(TAG, Enables.DEBUGGING_ENABLED);
+		_logger.Debug("onCreate");
 
 		_noteEdited = false;
 
@@ -82,13 +91,13 @@ public class ActivityDetails extends Activity {
 		_databaseController = new DatabaseController(_context);
 		_dialogController = new DialogController(_context, getResources().getColor(R.color.TextIcon),
 				getResources().getColor(R.color.Primary));
-		_mailService = new MailService(_context);
-		_navigationService = new NavigationService(_context);
+		_mailController = new MailController(_context);
+		_navigationController = new NavigationController(_context);
 		_networkController = new NetworkController(_context, _dialogController);
 
 		Bundle details = getIntent().getExtras();
-		_note = new Note(details.getInt(Constants.BUNDLE_NOTE_ID), details.getString(Constants.BUNDLE_NOTE_TITLE),
-				details.getString(Constants.BUNDLE_NOTE_CONTENT), 0, 0, 0);
+		_note = new Note(details.getInt(Bundles.BUNDLE_NOTE_ID), details.getString(Bundles.BUNDLE_NOTE_TITLE),
+				details.getString(Bundles.BUNDLE_NOTE_CONTENT), 0, 0, 0);
 		_originalNote = _note;
 
 		_titleView = (EditText) findViewById(R.id.detailTitle);
@@ -144,6 +153,8 @@ public class ActivityDetails extends Activity {
 		_btnEditSave.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				_logger.Debug("_btnEditSave onClick");
+
 				if (_noteEdited) {
 					_databaseController.UpdateNote(_note);
 
@@ -156,9 +167,11 @@ public class ActivityDetails extends Activity {
 		_btnDelete.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				_logger.Debug("_btnDelete onClick");
+
 				if (!_noteEdited) {
 					_dialogController.ShowDialogDouble("Delete Note?", "Do you want to delete the note?", "Yes",
-							deleteNoteCallback, "No", _dialogController.CloseDialogCallback, true);
+							_deleteNoteCallback, "No", _dialogController.CloseDialogCallback, true);
 				}
 			}
 		});
@@ -167,10 +180,12 @@ public class ActivityDetails extends Activity {
 		_btnMail.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				_logger.Debug("_btnMail onClick");
+
 				if (_networkController.IsNetworkAvailable()) {
-					_mailService.SendMailWithContent(_note.GetTitle(), _note.GetContent(), false);
+					_mailController.SendMailWithContent(_note.GetTitle(), _note.GetContent(), false);
 				} else {
-					Toast.makeText(_context, "Sorry, no network available!", Toast.LENGTH_SHORT).show();
+					Toasty.error(_context, "Sorry, no network available!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -179,15 +194,18 @@ public class ActivityDetails extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			_logger.Debug("onKeyDown");
+
 			if (_noteEdited) {
 				_dialogController.ShowDialogTriple("Warning!",
-						"The created note is not saved! Do you want to save the note?", "Yes", updateNoteCallback, "No",
-						showOriginalNoteCallback, "Cancel", _dialogController.CloseDialogCallback, true);
+						"The created note is not saved! Do you want to save the note?", "Yes", _updateNoteCallback,
+						"No", _showOriginalNoteCallback, "Cancel", _dialogController.CloseDialogCallback, true);
 			} else {
-				_navigationService.NavigateTo(ActivityNotes.class, true);
+				_navigationController.NavigateTo(ActivityNotes.class, true);
 			}
 			return true;
 		}
+
 		return super.onKeyDown(keyCode, event);
 	}
 
