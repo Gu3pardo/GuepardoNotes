@@ -16,12 +16,12 @@ import android.widget.ImageButton;
 import android.widget.Scroller;
 import android.widget.Toast;
 
-import es.dmoral.toasty.Toasty;
-
 import guepardoapps.guepardonotes.R;
 import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.*;
 import guepardoapps.guepardonotes.model.Note;
+
+import guepardoapps.library.toastview.ToastView;
 
 import guepardoapps.toolset.common.Logger;
 import guepardoapps.toolset.controller.DialogController;
@@ -185,7 +185,7 @@ public class ActivityDetails extends Activity {
 				if (_networkController.IsNetworkAvailable()) {
 					_mailController.SendMailWithContent(_note.GetTitle(), _note.GetContent(), false);
 				} else {
-					Toasty.error(_context, "Sorry, no network available!", Toast.LENGTH_SHORT).show();
+					ToastView.error(_context, "Sorry, no network available!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

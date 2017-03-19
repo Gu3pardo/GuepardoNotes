@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.Scroller;
 import android.widget.Toast;
 
-import es.dmoral.toasty.Toasty;
-
 import guepardoapps.guepardonotes.R;
 import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.DatabaseController;
 import guepardoapps.guepardonotes.model.Note;
+
+import guepardoapps.library.toastview.ToastView;
 
 import guepardoapps.toolset.common.Logger;
 import guepardoapps.toolset.controller.*;
@@ -48,12 +48,12 @@ public class ActivityAdd extends Activity {
 			_logger.Debug("_trySaveNewNoteCallback run");
 
 			if (_title == "") {
-				Toasty.error(_context, "Please enter a title!", Toast.LENGTH_SHORT).show();
+				ToastView.error(_context, "Please enter a title!", Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			if (_content == "") {
-				Toasty.error(_context, "Please enter a note!", Toast.LENGTH_SHORT).show();
+				ToastView.error(_context, "Please enter a note!", Toast.LENGTH_SHORT).show();
 				return;
 			}
 
