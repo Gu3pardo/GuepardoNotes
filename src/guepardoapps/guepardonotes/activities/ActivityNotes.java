@@ -18,8 +18,8 @@ import guepardoapps.guepardonotes.controller.DatabaseController;
 import guepardoapps.guepardonotes.customadapter.NoteListAdapter;
 import guepardoapps.guepardonotes.model.Note;
 
-import guepardoapps.toolset.common.Logger;
-import guepardoapps.toolset.controller.NavigationController;
+import guepardoapps.library.toolset.common.Logger;
+import guepardoapps.library.toolset.controller.NavigationController;
 
 public class ActivityNotes extends Activity {
 
@@ -49,7 +49,10 @@ public class ActivityNotes extends Activity {
 		_logger.Debug("onCreate");
 
 		_context = this;
-		_databaseController = new DatabaseController(_context);
+
+		_databaseController = DatabaseController.getInstance();
+		_databaseController.Initialize(_context);
+
 		_navigationController = new NavigationController(_context);
 
 		_listView = (ListView) findViewById(R.id.listView);
@@ -78,10 +81,19 @@ public class ActivityNotes extends Activity {
 		_created = true;
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		_logger.Debug("onPause");
+		_databaseController.Dispose();
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-
 		_logger.Debug("onResume");
+
+		_databaseController.Initialize(_context);
 
 		if (_created) {
 			_noteList = _databaseController.GetNotes();
@@ -91,5 +103,12 @@ public class ActivityNotes extends Activity {
 			_progressBar.setVisibility(View.GONE);
 			_listView.setVisibility(View.VISIBLE);
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		_logger.Debug("onDestroy");
+		_databaseController.Dispose();
 	}
 }

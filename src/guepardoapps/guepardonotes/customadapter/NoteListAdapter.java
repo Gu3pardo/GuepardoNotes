@@ -17,8 +17,8 @@ import guepardoapps.guepardonotes.activities.ActivityDetails;
 import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.model.Note;
 
-import guepardoapps.toolset.common.Logger;
-import guepardoapps.toolset.controller.NavigationController;
+import guepardoapps.library.toolset.common.Logger;
+import guepardoapps.library.toolset.controller.NavigationController;
 
 public class NoteListAdapter extends BaseAdapter {
 

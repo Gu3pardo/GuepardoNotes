@@ -34,10 +34,8 @@ public class Database {
 		@Override
 		public void onCreate(SQLiteDatabase database) {
 			database.execSQL(
-					" CREATE TABLE " + DATABASE_TABLE + " ( " 
-							+ KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-							+ KEY_TITLE + " TEXT NOT NULL, " 
-							+ KEY_NOTES + " TEXT NOT NULL); ");
+					" CREATE TABLE " + DATABASE_TABLE + " ( " + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+							+ KEY_TITLE + " TEXT NOT NULL, " + KEY_NOTES + " TEXT NOT NULL); ");
 		}
 
 		@Override
@@ -67,10 +65,10 @@ public class Database {
 
 	public long CreateEntry(Note newNote) {
 		ContentValues contentValues = new ContentValues();
-		
+
 		contentValues.put(KEY_TITLE, newNote.GetTitle());
 		contentValues.put(KEY_NOTES, newNote.GetContent());
-		
+
 		return _database.insert(DATABASE_TABLE, null, contentValues);
 	}
 
@@ -87,6 +85,8 @@ public class Database {
 			result.add(new Note(cursor.getInt(idIndex), cursor.getString(titleIndex), cursor.getString(noteIndex), 0, 0,
 					0));
 		}
+
+		cursor.close();
 
 		return result;
 	}

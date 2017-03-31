@@ -23,11 +23,11 @@ import guepardoapps.guepardonotes.model.Note;
 
 import guepardoapps.library.toastview.ToastView;
 
-import guepardoapps.toolset.common.Logger;
-import guepardoapps.toolset.controller.DialogController;
-import guepardoapps.toolset.controller.MailController;
-import guepardoapps.toolset.controller.NavigationController;
-import guepardoapps.toolset.controller.NetworkController;
+import guepardoapps.library.toolset.common.Logger;
+import guepardoapps.library.toolset.controller.DialogController;
+import guepardoapps.library.toolset.controller.MailController;
+import guepardoapps.library.toolset.controller.NavigationController;
+import guepardoapps.library.toolset.controller.NetworkController;
 
 public class ActivityDetails extends Activity {
 
@@ -88,7 +88,10 @@ public class ActivityDetails extends Activity {
 		_noteEdited = false;
 
 		_context = this;
-		_databaseController = new DatabaseController(_context);
+
+		_databaseController = DatabaseController.getInstance();
+		_databaseController.Initialize(_context);
+
 		_dialogController = new DialogController(_context, getResources().getColor(R.color.TextIcon),
 				getResources().getColor(R.color.Primary));
 		_mailController = new MailController(_context);
@@ -189,6 +192,27 @@ public class ActivityDetails extends Activity {
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		_logger.Debug("onPause");
+		_databaseController.Dispose();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		_logger.Debug("onResume");
+		_databaseController.Initialize(_context);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		_logger.Debug("onDestroy");
+		_databaseController.Dispose();
 	}
 
 	@Override

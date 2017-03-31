@@ -10,9 +10,9 @@ import guepardoapps.guepardonotes.common.constants.*;
 import guepardoapps.guepardonotes.controller.DatabaseController;
 import guepardoapps.guepardonotes.model.Note;
 
-import guepardoapps.toolset.common.Logger;
-import guepardoapps.toolset.controller.NavigationController;
-import guepardoapps.toolset.controller.SharedPrefController;
+import guepardoapps.library.toolset.common.Logger;
+import guepardoapps.library.toolset.controller.NavigationController;
+import guepardoapps.library.toolset.controller.SharedPrefController;
 
 public class ActivityBoot extends Activity {
 
@@ -35,7 +35,10 @@ public class ActivityBoot extends Activity {
 		_logger.Debug("onCreate");
 
 		_context = this;
-		_databaseController = new DatabaseController(_context);
+
+		_databaseController = DatabaseController.getInstance();
+		_databaseController.Initialize(_context);
+
 		_navigationController = new NavigationController(_context);
 		_sharedPrefController = new SharedPrefController(_context, SharedPrefConstants.SHARED_PREF_NAME);
 
@@ -48,19 +51,25 @@ public class ActivityBoot extends Activity {
 		_navigationController.NavigateTo(ActivityNotes.class, true);
 	}
 
+	@Override
 	protected void onResume() {
 		super.onResume();
 		_logger.Debug("onResume");
+		_databaseController.Initialize(_context);
 		_navigationController.NavigateTo(ActivityNotes.class, true);
 	}
 
 	@Override
-	public void onPause() {
+	protected void onPause() {
 		super.onPause();
+		_logger.Debug("onPause");
+		_databaseController.Dispose();
 	}
 
 	@Override
-	public void onDestroy() {
+	protected void onDestroy() {
 		super.onDestroy();
+		_logger.Debug("onDestroy");
+		_databaseController.Dispose();
 	}
 }

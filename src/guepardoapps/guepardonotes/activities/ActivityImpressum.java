@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+
 import guepardoapps.guepardonotes.R;
 import guepardoapps.guepardonotes.common.constants.*;
-import guepardoapps.toolset.common.Logger;
-import guepardoapps.toolset.controller.MailController;
-import guepardoapps.toolset.controller.NavigationController;
+
+import guepardoapps.library.toolset.common.Logger;
+import guepardoapps.library.toolset.controller.MailController;
+import guepardoapps.library.toolset.controller.NavigationController;
 
 public class ActivityImpressum extends Activity {
 
