@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">MyNote</string>
+
+    <string name="create">Create</string>
+    <string name="edit"> Edit </string>
+    <string name="delete">Delete</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="addPlus">+</string>
+
+    <string name="notes">Notes</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="new_note">New note</string>
+
+    <string name="prompt">Prompt</string>
+    <string name="ok">OK</string>
+    <string name="neutral">Neutral</string>
+
+    <string name="hint">Enter your notes, please!</string>
+    <string name="hint_add_title">Title of your note</string>
+    <string name="hint_add_content">Add your note here</string>
+
+    <string name="short_example">Example</string>
+    <string name="example">This is an example for a long and multiline sentence in this application.</string>
+
+
+    <string name="contentDescription">This is a image</string>
+
+    <string name="about">About</string>
+    <string name="author">Jonas Schubert\nGuepardoApps</string>
+    <string name="email">E-Mail: guepardoapps@gmail.com</string>
+    <string name="gitHubLink">https://github.com/Gu3pardo/MyNote/</string>
+    <string name="payPalLink">https://www.paypal.me/GuepardoApps/</string>
+</resources>
