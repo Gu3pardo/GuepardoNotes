@@ -7,8 +7,8 @@ android {
         applicationId "guepardoapps.mynote"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 10100
-        versionName "1.1.0.170902"
+        versionCode 10101
+        versionName "1.1.1.170902"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
