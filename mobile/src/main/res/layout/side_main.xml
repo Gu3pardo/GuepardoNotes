@@ -36,6 +36,39 @@
             </FrameLayout>
 
             <com.rey.material.widget.FloatingActionButton
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:contentDescription="@string/contentDescription"
+                app:fab_iconSize="30dp"
+                app:fab_iconSrc="@android:drawable/ic_menu_close_clear_cancel"
+                app:fab_radius="17dp"
+                app:rd_delayClick="none"
+                app:rd_enable="true"
+                app:rd_rippleColor="@color/colorPrimary"
+                app:rd_rippleType="touch" />
+
+            <com.rey.material.widget.FloatingActionButton
+                android:id="@+id/btnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/btnImpressum"
+                android:contentDescription="@string/contentDescription"
+                app:fab_iconSize="30dp"
+                app:fab_iconSrc="@android:drawable/ic_menu_manage"
+                app:fab_radius="17dp"
+                app:rd_backgroundColor="@color/DarkPrimary"
+                app:rd_delayClick="none"
+                app:rd_enable="true"
+                app:rd_rippleColor="@color/colorAccent"
+                app:rd_rippleType="touch" />
+
+            <com.rey.material.widget.FloatingActionButton
                 android:id="@+id/btnImpressum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

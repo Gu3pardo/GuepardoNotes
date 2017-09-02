@@ -14,10 +14,13 @@ import com.rey.material.widget.FloatingActionButton;
 
 import guepardoapps.mynote.R;
 import guepardoapps.mynote.common.constants.*;
+import guepardoapps.mynote.controller.AndroidSystemController;
 import guepardoapps.mynote.controller.DatabaseController;
 import guepardoapps.mynote.controller.NavigationController;
 import guepardoapps.mynote.controller.ReceiverController;
+import guepardoapps.mynote.controller.SharedPrefController;
 import guepardoapps.mynote.customadapter.NoteListAdapter;
+import guepardoapps.mynote.service.FloatingService;
 import guepardoapps.mynote.tools.Logger;
 
 public class ActivityNotes extends Activity {
@@ -31,9 +34,13 @@ public class ActivityNotes extends Activity {
 
     private Context _context;
 
+    private AndroidSystemController _androidSystemController;
     private DatabaseController _databaseController;
     private NavigationController _navigationController;
     private ReceiverController _receiverController;
+    private SharedPrefController _sharedPrefController;
+
+    private Class<FloatingService> _floatingService;
 
     private BroadcastReceiver _noteDeletedReceiver = new BroadcastReceiver() {
         @Override
@@ -52,20 +59,25 @@ public class ActivityNotes extends Activity {
 
         _context = this;
 
+        _androidSystemController = new AndroidSystemController(_context);
         _databaseController = DatabaseController.getInstance();
         _navigationController = new NavigationController(_context);
         _receiverController = new ReceiverController(_context);
+        _sharedPrefController = new SharedPrefController(_context, SharedPrefConstants.SHARED_PREF_NAME);
         _databaseController.Initialize(_context);
+
+        _floatingService = FloatingService.class;
+        tryToStopService();
 
         _listView = findViewById(R.id.listView);
         _progressBar = findViewById(R.id.progressBar);
 
-        FloatingActionButton btnAdd = findViewById(R.id.goToAddView);
-        btnAdd.setOnClickListener(new OnClickListener() {
+        FloatingActionButton btnSettings = findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                _logger.Debug("btnAdd onClick");
-                _navigationController.NavigateTo(ActivityAdd.class, false);
+                _logger.Debug("btnSettings onClick");
+                _navigationController.NavigateTo(ActivitySettings.class, false);
             }
         });
 
@@ -78,6 +90,18 @@ public class ActivityNotes extends Activity {
             }
         });
 
+        FloatingActionButton btnAdd = findViewById(R.id.goToAddView);
+        btnAdd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _logger.Debug("btnAdd onClick");
+                _navigationController.NavigateTo(ActivityAdd.class, false);
+            }
+        });
+
+        FloatingActionButton btnClose = findViewById(R.id.btnClose);
+        btnClose.setVisibility(View.GONE);
+
         _created = true;
     }
 
@@ -86,6 +110,7 @@ public class ActivityNotes extends Activity {
         super.onPause();
         _logger.Debug("onPause");
         _receiverController.Dispose();
+        tryToStartService();
     }
 
     @Override
@@ -102,6 +127,8 @@ public class ActivityNotes extends Activity {
             _progressBar.setVisibility(View.GONE);
             _listView.setVisibility(View.VISIBLE);
         }
+
+        tryToStopService();
     }
 
     @Override
@@ -110,5 +137,19 @@ public class ActivityNotes extends Activity {
         _logger.Debug("onDestroy");
         _databaseController.Dispose();
         _receiverController.Dispose();
+        tryToStartService();
+    }
+
+    private void tryToStartService() {
+        if (!_androidSystemController.IsServiceRunning(_floatingService)
+                && _sharedPrefController.LoadBooleanValueFromSharedPreferences(SharedPrefConstants.BUBBLE_STATE)) {
+            startService(new Intent(_context, _floatingService));
+        }
+    }
+
+    private void tryToStopService() {
+        if (_androidSystemController.IsServiceRunning(_floatingService)) {
+            stopService(new Intent(_context, _floatingService));
+        }
     }
 }

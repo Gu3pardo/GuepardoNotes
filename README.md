@@ -6,9 +6,10 @@
 <a target="_blank" href="https://www.paypal.me/GuepardoApps" title="Donate using PayPal"><img src="https://img.shields.io/badge/paypal-donate-blue.svg" /></a>
 
 [![Build](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/GuepardoApps/MyNote/tree/master/release)
-[![Version](https://img.shields.io/badge/version-v1.0.1.170902-blue.svg)](https://github.com/GuepardoApps/MyNote/tree/master/release/v1.0.1.170902.apk)
+[![Version](https://img.shields.io/badge/version-v1.1.0.170902-blue.svg)](https://github.com/GuepardoApps/MyNote/tree/master/release/v1.1.0.170902.apk)
 
 Simple android application with material design to create notes and saving them to a database.
+Further feature is a floating bubble. So you can access your notes in a fast and easy way :+1:
 
 # Screenshots
 
@@ -16,3 +17,6 @@ Simple android application with material design to create notes and saving them 
 ___________________________________
 
 ![alt tag](https://github.com/GuepardoApps/MyNote/blob/master/screenshots/header_002.png)
+___________________________________
+
+![alt tag](https://github.com/GuepardoApps/MyNote/blob/master/screenshots/header_003.png)

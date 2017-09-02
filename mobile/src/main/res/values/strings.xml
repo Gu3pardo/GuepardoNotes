@@ -34,4 +34,6 @@
     <string name="email">E-Mail: guepardoapps@gmail.com</string>
     <string name="gitHubLink">https://github.com/Gu3pardo/MyNote/</string>
     <string name="payPalLink">https://www.paypal.me/GuepardoApps/</string>
+
+    <string name="set_bubble_state">Activate floating note</string>
 </resources>

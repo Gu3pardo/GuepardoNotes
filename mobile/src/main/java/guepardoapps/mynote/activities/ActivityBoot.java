@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import guepardoapps.mynote.R;
 import guepardoapps.mynote.common.constants.*;
+import guepardoapps.mynote.controller.AndroidSystemController;
 import guepardoapps.mynote.controller.DatabaseController;
 import guepardoapps.mynote.controller.NavigationController;
 import guepardoapps.mynote.controller.SharedPrefController;
@@ -19,6 +20,7 @@ public class ActivityBoot extends Activity {
 
     private Context _context;
 
+    private AndroidSystemController _androidSystemController;
     private DatabaseController _databaseController;
     private NavigationController _navigationController;
 
@@ -32,14 +34,16 @@ public class ActivityBoot extends Activity {
 
         _context = this;
 
+        _androidSystemController = new AndroidSystemController(this);
         _databaseController = DatabaseController.getInstance();
         _databaseController.Initialize(_context);
-
         _navigationController = new NavigationController(_context);
 
         SharedPrefController sharedPrefController = new SharedPrefController(_context, SharedPrefConstants.SHARED_PREF_NAME);
         if (!sharedPrefController.LoadBooleanValueFromSharedPreferences(SharedPrefConstants.SHARED_PREF_NAME)) {
             _databaseController.SaveNote(new Note(0, "Title", getResources().getString(R.string.example)));
+            sharedPrefController.SaveBooleanValue(SharedPrefConstants.BUBBLE_STATE, true);
+            sharedPrefController.SaveIntegerValue(SharedPrefConstants.BUBBLE_POS_Y, SharedPrefConstants.BUBBLE_DEFAULT_POS_Y);
             sharedPrefController.SaveBooleanValue(SharedPrefConstants.SHARED_PREF_NAME, true);
         }
     }
@@ -50,12 +54,14 @@ public class ActivityBoot extends Activity {
         _logger.Debug("onResume");
         _databaseController.Initialize(_context);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                _navigationController.NavigateTo(ActivityNotes.class, true);
+        if (_androidSystemController.CurrentAndroidApi() >= android.os.Build.VERSION_CODES.M) {
+            _logger.Debug("asking for permission");
+            if (_androidSystemController.CheckAPI23SystemPermission(PermissionCodes.SYSTEM_PERMISSION)) {
+                navigateToMain();
             }
-        }, 1500);
+        } else {
+            navigateToMain();
+        }
     }
 
     @Override
@@ -69,5 +75,14 @@ public class ActivityBoot extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         _logger.Debug("onDestroy");
+    }
+
+    private void navigateToMain() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _navigationController.NavigateTo(ActivityNotes.class, true);
+            }
+        }, 1500);
     }
 }
