@@ -23,4 +23,4 @@ ___________________________________
 
 ## License
 
-MyCoins is distributed under the MIT license. [See LICENSE](LICENSE.md) for details.
+MyNote is distributed under the MIT license. [See LICENSE](LICENSE.md) for details.
