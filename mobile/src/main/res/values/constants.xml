@@ -1,0 +1,16 @@
+<resources>
+    <string name="sharedPrefName">MyNoteSharedPref</string>
+    <string name="sharedPrefKey">23l.,3k4</string>
+    <string name="sharedPrefBubbleState">BubbleState</string>
+    <string name="sharedPrefBubblePosX">BubblePosX</string>
+    <string name="sharedPrefBubblePosY">BubblePosY</string>
+
+    <string name="bundleDataId">id</string>
+
+    <integer name="systemPermissionId">23532</integer>
+
+    <integer name="sharedPrefBubbleDefaultPosX">0</integer>
+    <integer name="sharedPrefBubbleDefaultPosY">100</integer>
+
+    <integer name="bubbleMinMove">25</integer>
+</resources>
