@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="5dp"
-                android:layout_toStartOf="@+id/btnImpressum"
+                android:layout_toStartOf="@+id/btnAbout"
                 android:contentDescription="@string/contentDescription"
                 app:fab_iconSize="30dp"
                 app:fab_iconSrc="@android:drawable/ic_menu_manage"
@@ -69,7 +69,7 @@
                 app:rd_rippleType="touch" />
 
             <com.rey.material.widget.FloatingActionButton
-                android:id="@+id/btnImpressum"
+                android:id="@+id/btnAbout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
