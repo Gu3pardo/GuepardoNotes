@@ -23,9 +23,9 @@ class ActivityMain : Activity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private var sharedPreferenceController: SharedPreferenceController = SharedPreferenceController(this)
+    private val sharedPreferenceController: SharedPreferenceController = SharedPreferenceController(this)
 
-    private var systemInfoController: SystemInfoController = SystemInfoController(this)
+    private val systemInfoController: SystemInfoController = SystemInfoController(this)
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

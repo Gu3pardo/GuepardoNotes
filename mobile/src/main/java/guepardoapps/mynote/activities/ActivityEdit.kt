@@ -25,9 +25,9 @@ class ActivityEdit : Activity() {
 
     private lateinit var context: Context
 
-    private var dbNote: DbNote = DbNote(this)
+    private val dbNote: DbNote = DbNote(this)
 
-    private var dialogController: IDialogController = DialogController(this)
+    private val dialogController: IDialogController = DialogController(this)
 
     private var noteEdited: Boolean = false
 

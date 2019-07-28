@@ -18,7 +18,7 @@ import guepardoapps.mynote.model.Note
 
 class ActivityAdd : Activity() {
 
-    private var dialogController: IDialogController = DialogController(this)
+    private val dialogController: IDialogController = DialogController(this)
 
     private lateinit var editContent: EditText
 
