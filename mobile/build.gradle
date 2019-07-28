@@ -5,12 +5,13 @@ apply plugin: "kotlin-android-extensions"
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
+
     defaultConfig {
         applicationId "guepardoapps.mynote"
         minSdkVersion 26
         targetSdkVersion 28
-        versionCode 10200
-        versionName "1.2.0.190524"
+        versionCode 20000
+        versionName "2.0.0.190728"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -46,7 +47,7 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.percentlayout:percentlayout:1.0.0"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
-    implementation "androidx.annotation:annotation:1.0.2"
+    implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.core:core:1.0.2"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.legacy:legacy-support-v13:1.0.0"
@@ -57,6 +58,7 @@ dependencies {
     implementation "com.github.AndreaCioccarelli:CryptoPrefs:$cryptoprefs_version"
     implementation "com.github.daniel-stoneuk:material-about-library:$materialabout_version"
     implementation "com.github.GrenderG:Toasty:$toasty_version"
+    implementation "com.github.GuepardoApps:KUlid:$kulid_version"
     implementation "com.github.rey5137:material:$rey_material_version"
     implementation "com.github.TimeXt.TimeXt-Kotlin:timext:$timext_version"
     implementation "com.github.TimeXt.TimeXt-Kotlin:timext-android:$timext_version"

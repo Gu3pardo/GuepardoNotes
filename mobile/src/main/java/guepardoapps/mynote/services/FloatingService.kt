@@ -30,32 +30,28 @@ import guepardoapps.mynote.utils.Logger
 
 @ExperimentalUnsignedTypes
 class FloatingService : Service() {
-    private val tag: String = FloatingService::class.java.simpleName
 
-    private lateinit var navigationController: NavigationController
-    private lateinit var systemInfoController: SystemInfoController
+    private lateinit var bubbleView: ImageView
 
     private lateinit var bubbleWindowManager: WindowManager
+
     private lateinit var listViewWindowManager: WindowManager
 
-    private var bubbleParamsStore: WindowManager.LayoutParams? = null
-    private lateinit var bubbleView: ImageView
-    private var bubblePosX: Int = 0
-    private var bubblePosY: Int = 100
-    private var bubbleMoved: Boolean = false
+    private lateinit var navigationController: NavigationController
+
+    private lateinit var systemInfoController: SystemInfoController
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
 
+        bubbleView = ImageView(this)
+        bubbleWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        listViewWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         navigationController = NavigationController(this)
         systemInfoController = SystemInfoController(this)
 
-        bubbleWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        listViewWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        bubbleView = ImageView(this)
         initBubbleView()
     }
 
@@ -64,7 +60,7 @@ class FloatingService : Service() {
         try {
             bubbleWindowManager.removeView(bubbleView)
         } catch (exception: Exception) {
-            Logger.instance.error(tag, exception)
+            Logger.instance.error(FloatingService::class.java.simpleName, exception)
         }
     }
 
@@ -73,21 +69,20 @@ class FloatingService : Service() {
     private fun initBubbleView() {
         val sharedPreferenceController = SharedPreferenceController(this)
 
-        bubblePosX = sharedPreferenceController.load(getString(R.string.sharedPrefBubblePosX), resources.getInteger(R.integer.sharedPrefBubbleDefaultPosX))
-        bubblePosY = sharedPreferenceController.load(getString(R.string.sharedPrefBubblePosY), resources.getInteger(R.integer.sharedPrefBubbleDefaultPosY))
+        var bubbleMoved = false
+        var bubbleParamsStore: WindowManager.LayoutParams? = null
 
         val params = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT)
-        params.gravity = Gravity.TOP or Gravity.START
-        params.x = bubblePosX
-        params.y = bubblePosY
-        params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-
-        bubbleParamsStore = params
+                PixelFormat.TRANSLUCENT).apply {
+            gravity = Gravity.TOP or Gravity.START
+            x = sharedPreferenceController.load(getString(R.string.sharedPrefBubblePosX), resources.getInteger(R.integer.sharedPrefBubbleDefaultPosX))
+            y = sharedPreferenceController.load(getString(R.string.sharedPrefBubblePosY), resources.getInteger(R.integer.sharedPrefBubbleDefaultPosY))
+            type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        }
 
         val backgroundShape = GradientDrawable()
         backgroundShape.setColor(resources.getColor(R.color.colorPrimaryDark))
@@ -127,12 +122,10 @@ class FloatingService : Service() {
                         params.y = initialY + (event.rawY - initialTouchY).toInt()
 
                         val minMovement = resources.getInteger(R.integer.bubbleMinMove)
-                        if (initialX - params.x > minMovement
+                        bubbleMoved = initialX - params.x > minMovement
                                 || initialY - params.y > minMovement
                                 || params.x - initialX > minMovement
-                                || params.y - initialY > minMovement) {
-                            bubbleMoved = true
-                        }
+                                || params.y - initialY > minMovement
 
                         bubbleParamsStore = params
                         bubbleWindowManager.updateViewLayout(bubbleView, bubbleParamsStore)
@@ -149,16 +142,10 @@ class FloatingService : Service() {
             if (bubbleMoved) {
                 bubbleMoved = false
 
-                if (params.x > (systemInfoController.displayDimension().width / 2)) {
-                    params.x = systemInfoController.displayDimension().width
-                } else {
-                    params.x = 0
-                }
-                bubblePosX = params.x
-                bubblePosY = params.y
+                params.x = if (params.x > systemInfoController.displayDimension().width / 2) systemInfoController.displayDimension().width else 0
 
-                sharedPreferenceController.save(getString(R.string.sharedPrefBubblePosX), bubblePosX)
-                sharedPreferenceController.save(getString(R.string.sharedPrefBubblePosY), bubblePosY)
+                sharedPreferenceController.save(getString(R.string.sharedPrefBubblePosX), params.x)
+                sharedPreferenceController.save(getString(R.string.sharedPrefBubblePosY), params.y)
 
                 bubbleParamsStore = params
                 bubbleWindowManager.updateViewLayout(bubbleView, bubbleParamsStore)
@@ -196,22 +183,22 @@ class FloatingService : Service() {
                     listViewWindowManager.removeView(listView)
                 }
 
-        val noteListView = listView.findViewById<ListView>(R.id.listView)
-        noteListView.adapter = NoteListAdapter(this, DbNote(this).get().toTypedArray())
-        noteListView.visibility = View.VISIBLE
+        listView.findViewById<ListView>(R.id.listView).apply {
+            adapter = NoteListAdapter(context, DbNote(context).get().toTypedArray())
+            visibility = View.VISIBLE
+        }
         listView.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
 
-        val layoutParams = WindowManager.LayoutParams().apply {
-            gravity = Gravity.CENTER
-            type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            width = WindowManager.LayoutParams.MATCH_PARENT
-            height = WindowManager.LayoutParams.WRAP_CONTENT
-            alpha = 1.0f
-            packageName = applicationContext.packageName
-            buttonBrightness = 1f
-            windowAnimations = android.R.style.Animation_Dialog
-        }
-
-        listViewWindowManager.addView(listView, layoutParams)
+        listViewWindowManager.addView(listView, WindowManager.LayoutParams()
+                .apply {
+                    gravity = Gravity.CENTER
+                    type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                    width = WindowManager.LayoutParams.MATCH_PARENT
+                    height = WindowManager.LayoutParams.WRAP_CONTENT
+                    alpha = 1.0f
+                    packageName = applicationContext.packageName
+                    buttonBrightness = 1f
+                    windowAnimations = android.R.style.Animation_Dialog
+                })
     }
 }

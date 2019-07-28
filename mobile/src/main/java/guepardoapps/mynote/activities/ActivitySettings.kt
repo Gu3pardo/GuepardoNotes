@@ -11,18 +11,12 @@ import guepardoapps.mynote.services.FloatingService
 
 @ExperimentalUnsignedTypes
 class ActivitySettings : Activity() {
-
-    private val _floatingService = FloatingService::class.java
-
-    private lateinit var sharedPreferenceController: SharedPreferenceController
-    private lateinit var systemInfoController: SystemInfoController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.side_settings)
 
-        sharedPreferenceController = SharedPreferenceController(this)
-        systemInfoController = SystemInfoController(this)
+        val sharedPreferenceController = SharedPreferenceController(this)
+        val systemInfoController = SystemInfoController(this)
 
         switchBubbleState.isChecked = sharedPreferenceController.load(getString(R.string.sharedPrefBubbleState), false)
         switchBubbleState.setOnCheckedChangeListener { _, isChecked ->
@@ -31,11 +25,11 @@ class ActivitySettings : Activity() {
                 if (systemInfoController.canDrawOverlay()) {
                     systemInfoController.checkAPI23SystemPermission(resources.getInteger(R.integer.systemPermissionId))
                 } else {
-                    startService(Intent(this, _floatingService))
+                    startService(Intent(this, FloatingService::class.java))
                 }
             } else {
-                if (systemInfoController.isServiceRunning(_floatingService)) {
-                    stopService(Intent(this, _floatingService))
+                if (systemInfoController.isServiceRunning(FloatingService::class.java)) {
+                    stopService(Intent(this, FloatingService::class.java))
                 }
             }
         }

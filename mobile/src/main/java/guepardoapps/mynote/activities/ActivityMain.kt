@@ -20,13 +20,12 @@ class ActivityMain : Activity() {
     private var activityCreated: Boolean = false
 
     private lateinit var listView: ListView
+
     private lateinit var progressBar: ProgressBar
 
-    private lateinit var navigationController: NavigationController
-    private lateinit var sharedPreferenceController: SharedPreferenceController
-    private lateinit var systemInfoController: SystemInfoController
+    private var sharedPreferenceController: SharedPreferenceController = SharedPreferenceController(this)
 
-    private lateinit var floatingService: Class<FloatingService>
+    private var systemInfoController: SystemInfoController = SystemInfoController(this)
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +34,20 @@ class ActivityMain : Activity() {
         listView = findViewById(R.id.listView)
         progressBar = findViewById(R.id.progressBar)
 
-        navigationController = NavigationController(this)
-        sharedPreferenceController = SharedPreferenceController(this)
-        systemInfoController = SystemInfoController(this)
-
-        floatingService = FloatingService::class.java
         tryToStopService()
 
+        val navigationController = NavigationController(this)
         findViewById<View>(R.id.btnSettings).setOnClickListener { navigationController.navigate(ActivitySettings::class.java, false) }
         findViewById<View>(R.id.btnAbout).setOnClickListener { navigationController.navigate(ActivityAbout::class.java, false) }
         findViewById<View>(R.id.goToAddView).setOnClickListener { navigationController.navigate(ActivityAdd::class.java, false) }
         findViewById<View>(R.id.btnClose).visibility = View.GONE
 
         activityCreated = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        tryToStartService()
     }
 
     override fun onPause() {
@@ -67,20 +67,15 @@ class ActivityMain : Activity() {
         tryToStopService()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        tryToStartService()
-    }
-
     private fun tryToStartService() {
-        if (!systemInfoController.isServiceRunning(floatingService) && sharedPreferenceController.load(getString(R.string.sharedPrefBubbleState), false)) {
-            startService(Intent(this, floatingService))
+        if (!systemInfoController.isServiceRunning(FloatingService::class.java) && sharedPreferenceController.load(getString(R.string.sharedPrefBubbleState), false)) {
+            startService(Intent(this, FloatingService::class.java))
         }
     }
 
     private fun tryToStopService() {
-        if (systemInfoController.isServiceRunning(floatingService)) {
-            stopService(Intent(this, floatingService))
+        if (systemInfoController.isServiceRunning(FloatingService::class.java)) {
+            stopService(Intent(this, FloatingService::class.java))
         }
     }
 }

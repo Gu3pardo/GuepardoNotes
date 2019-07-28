@@ -18,7 +18,7 @@ internal class DbNote(context: Context)
         val createTable = (
                 "CREATE TABLE IF NOT EXISTS $DatabaseTable"
                         + "("
-                        + "$ColumnId INTEGER PRIMARY KEY autoincrement,"
+                        + "$ColumnId TEXT PRIMARY KEY,"
                         + "$ColumnTitle TEXT NOT NULL,"
                         + "$ColumnContent TEXT NOT NULL,"
                         + "$ColumnYear  INTEGER,"
@@ -31,44 +31,28 @@ internal class DbNote(context: Context)
         database.execSQL(createTable)
     }
 
+    override fun onDowngrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) = onUpgrade(database, oldVersion, newVersion)
+
     override fun onUpgrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         database.execSQL("DROP TABLE IF EXISTS $DatabaseTable")
         onCreate(database)
     }
 
-    override fun onDowngrade(database: SQLiteDatabase, oldVersion: Int, newVersion: Int) = onUpgrade(database, oldVersion, newVersion)
+    fun add(note: Note): Long = this.writableDatabase
+            .insert(DatabaseTable, null, ContentValues()
+                    .apply {
+                        put(ColumnId, note.id)
+                        put(ColumnTitle, note.title)
+                        put(ColumnContent, note.content)
+                        put(ColumnYear, note.year)
+                        put(ColumnMonth, note.month)
+                        put(ColumnDay, note.day)
+                        put(ColumnHour, note.hour)
+                        put(ColumnMinute, note.minute)
+                        put(ColumnSecond, note.second)
+                    })
 
-    fun add(note: Note): Long {
-        val values = ContentValues().apply {
-            put(ColumnTitle, note.title)
-            put(ColumnContent, note.content)
-            put(ColumnYear, note.year)
-            put(ColumnMonth, note.month)
-            put(ColumnDay, note.day)
-            put(ColumnHour, note.hour)
-            put(ColumnMinute, note.minute)
-            put(ColumnSecond, note.second)
-        }
-
-        return this.writableDatabase.insert(DatabaseTable, null, values)
-    }
-
-    fun update(note: Note): Int {
-        val values = ContentValues().apply {
-            put(ColumnTitle, note.title)
-            put(ColumnContent, note.content)
-            put(ColumnYear, note.year)
-            put(ColumnMonth, note.month)
-            put(ColumnDay, note.day)
-            put(ColumnHour, note.hour)
-            put(ColumnMinute, note.minute)
-            put(ColumnSecond, note.second)
-        }
-
-        return this.writableDatabase.update(DatabaseTable, values, "$ColumnId LIKE ?", arrayOf(note.id.toString()))
-    }
-
-    fun delete(id: Int): Int = this.writableDatabase.delete(DatabaseTable, "$ColumnId LIKE ?", arrayOf(id.toString()))
+    fun delete(id: String): Int = this.writableDatabase.delete(DatabaseTable, "$ColumnId LIKE ?", arrayOf(id))
 
     fun get(): MutableList<Note> {
         val cursor = this.readableDatabase.query(
@@ -78,7 +62,7 @@ internal class DbNote(context: Context)
         val list = mutableListOf<Note>()
         with(cursor) {
             while (moveToNext()) {
-                val id = getLong(getColumnIndexOrThrow(ColumnId))
+                val id = getString(getColumnIndexOrThrow(ColumnId))
 
                 val title = getString(getColumnIndexOrThrow(ColumnTitle))
                 val content = getString(getColumnIndexOrThrow(ColumnContent))
@@ -98,9 +82,22 @@ internal class DbNote(context: Context)
         return list
     }
 
+    fun update(note: Note): Int = this.writableDatabase
+            .update(DatabaseTable, ContentValues()
+                    .apply {
+                        put(ColumnTitle, note.title)
+                        put(ColumnContent, note.content)
+                        put(ColumnYear, note.year)
+                        put(ColumnMonth, note.month)
+                        put(ColumnDay, note.day)
+                        put(ColumnHour, note.hour)
+                        put(ColumnMinute, note.minute)
+                        put(ColumnSecond, note.second)
+                    }, "$ColumnId LIKE ?", arrayOf(note.id))
+
     companion object {
-        private const val DatabaseVersion = 2
-        private const val DatabaseName = "guepardoapps-mynote-note.db"
+        private const val DatabaseVersion = 1
+        private const val DatabaseName = "guepardoapps-mynote-note-2.db"
         private const val DatabaseTable = "noteTable"
 
         private const val ColumnId = "_id"

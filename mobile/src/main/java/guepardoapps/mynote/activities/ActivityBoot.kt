@@ -3,7 +3,8 @@ package guepardoapps.mynote.activities
 import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
-import com.github.guepardoapps.timext.kotlin.extensions.milliseconds
+import com.github.guepardoapps.kulid.ULID
+import com.github.guepardoapps.timext.kotlin.extensions.millis
 import com.github.guepardoapps.timext.kotlin.postDelayed
 import guepardoapps.mynote.R
 import guepardoapps.mynote.controller.NavigationController
@@ -29,7 +30,7 @@ class ActivityBoot : Activity() {
                 save(getString(R.string.sharedPrefName), true)
             }
 
-            DbNote(this).add(Note(id = 0, title = getString(R.string.title), content = resources.getString(R.string.example)))
+            DbNote(this).add(Note(id = ULID.random(), title = getString(R.string.title), content = resources.getString(R.string.example)))
         }
     }
 
@@ -41,10 +42,10 @@ class ActivityBoot : Activity() {
 
         if (systemInfoController.currentAndroidApi() >= android.os.Build.VERSION_CODES.M) {
             if (systemInfoController.checkAPI23SystemPermission(resources.getInteger(R.integer.systemPermissionId))) {
-                Handler().postDelayed({ navigationController.navigate(ActivityMain::class.java, true) }, resources.getInteger(R.integer.bootNavigationDelayInMs).milliseconds)
+                Handler().postDelayed({ navigationController.navigate(ActivityMain::class.java, true) }, resources.getInteger(R.integer.bootNavigationDelayInMs).millis)
             }
         } else {
-            Handler().postDelayed({ navigationController.navigate(ActivityMain::class.java, true) }, resources.getInteger(R.integer.bootNavigationDelayInMs).milliseconds)
+            Handler().postDelayed({ navigationController.navigate(ActivityMain::class.java, true) }, resources.getInteger(R.integer.bootNavigationDelayInMs).millis)
         }
     }
 }
