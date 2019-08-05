@@ -16,7 +16,7 @@ import guepardoapps.mynote.database.note.DbNote
 import guepardoapps.mynote.model.Note
 
 @ExperimentalUnsignedTypes
-internal class NoteListAdapter(private val context: Context, private val list: Array<Note>) : BaseAdapter() {
+internal class NoteListAdapter(private val context: Context, private val list: Array<Note>, private val reload: () -> Unit) : BaseAdapter() {
 
     private val navigationController: NavigationController = NavigationController(context)
 
@@ -64,7 +64,10 @@ internal class NoteListAdapter(private val context: Context, private val list: A
                 MaterialDialog(context).show {
                     title(text = context.getString(R.string.delete))
                     message(text = String.format(context.getString(R.string.deleteRequest), note.title))
-                    positiveButton(text = context.getString(R.string.yes)) { DbNote(context).delete(note.id) }
+                    positiveButton(text = context.getString(R.string.yes)) {
+                        DbNote(context).delete(note.id)
+                        reload()
+                    }
                     negativeButton(text = context.getString(R.string.no))
                 }
             }

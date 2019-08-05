@@ -23,13 +23,16 @@ class ActivityMain : Activity() {
 
     private lateinit var progressBar: ProgressBar
 
-    private val sharedPreferenceController: SharedPreferenceController = SharedPreferenceController(this)
+    private lateinit var sharedPreferenceController: SharedPreferenceController
 
-    private val systemInfoController: SystemInfoController = SystemInfoController(this)
+    private lateinit var systemInfoController: SystemInfoController
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.side_main)
+
+        sharedPreferenceController = SharedPreferenceController(this)
+        systemInfoController = SystemInfoController(this)
 
         listView = findViewById(R.id.listView)
         progressBar = findViewById(R.id.progressBar)
@@ -59,12 +62,16 @@ class ActivityMain : Activity() {
         super.onResume()
 
         if (activityCreated) {
-            listView.adapter = NoteListAdapter(this, DbNote(this).get().toTypedArray())
-            progressBar.visibility = View.GONE
-            listView.visibility = View.VISIBLE
+            reload()
         }
 
         tryToStopService()
+    }
+
+    private fun reload() {
+        listView.adapter = NoteListAdapter(this, DbNote(this).get().toTypedArray()) { reload() }
+        progressBar.visibility = View.GONE
+        listView.visibility = View.VISIBLE
     }
 
     private fun tryToStartService() {

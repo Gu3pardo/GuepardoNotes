@@ -14,7 +14,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.ProgressBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.rey.material.widget.FloatingActionButton
 import guepardoapps.mynote.R
 import guepardoapps.mynote.activities.ActivityAbout
 import guepardoapps.mynote.activities.ActivityAdd
@@ -70,7 +70,7 @@ class FloatingService : Service() {
         val sharedPreferenceController = SharedPreferenceController(this)
 
         var bubbleMoved = false
-        var bubbleParamsStore: WindowManager.LayoutParams? = null
+        var bubbleParamsStore: WindowManager.LayoutParams?
 
         val params = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -154,6 +154,7 @@ class FloatingService : Service() {
             }
         }
 
+        bubbleParamsStore = params
         bubbleWindowManager.addView(bubbleView, bubbleParamsStore)
     }
 
@@ -184,7 +185,7 @@ class FloatingService : Service() {
                 }
 
         listView.findViewById<ListView>(R.id.listView).apply {
-            adapter = NoteListAdapter(context, DbNote(context).get().toTypedArray())
+            adapter = NoteListAdapter(context, DbNote(context).get().toTypedArray()) { showListView() }
             visibility = View.VISIBLE
         }
         listView.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
