@@ -4,7 +4,7 @@
 [![Paypal](https://img.shields.io/badge/paypal-donate-blue.svg)](https://www.paypal.me/GuepardoApps)
 
 [![Build](https://img.shields.io/badge/build-success-green.svg)](./releases)
-[![Version](https://img.shields.io/badge/version-2.0.2.190805-blue.svg)](./releases)
+[![Version](https://img.shields.io/badge/version-2.0.3.190810-blue.svg)](./releases)
 [![API](https://img.shields.io/badge/API-26+-blue.svg)](https://android-arsenal.com/api?level=26)
 
 [![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://www.android.com)
@@ -16,13 +16,9 @@ Further feature is a floating bubble. So you can access your notes in a fast and
 
 ## Screenshots
 
-![alt tag](screenshots/header_001.png)
-___________________________________
+![alt tag](./screenshots/header_001.png)
 
-![alt tag](screenshots/header_002.png)
-___________________________________
-
-![alt tag](screenshots/header_003.png)
+![alt tag](./screenshots/header_002.png)
 
 ## License
 

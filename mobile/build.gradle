@@ -10,8 +10,8 @@ android {
         applicationId "guepardoapps.mynote"
         minSdkVersion 26
         targetSdkVersion 28
-        versionCode 20002
-        versionName "2.0.2.190805"
+        versionCode 20003
+        versionName "2.0.3.190810"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

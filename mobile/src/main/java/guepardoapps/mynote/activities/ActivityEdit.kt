@@ -59,7 +59,6 @@ class ActivityEdit : Activity() {
         note = dbNote.get().first { x -> x.id == noteId }
 
         titleView.setText(note.title)
-        contentView.setText(note.content)
         dateTimeView.text = note.dateTimeString
 
         titleView.addTextChangedListener(object : TextWatcher {
@@ -74,20 +73,23 @@ class ActivityEdit : Activity() {
             }
         })
 
-        contentView.setScroller(Scroller(context))
-        contentView.isVerticalScrollBarEnabled = true
-        contentView.movementMethod = ScrollingMovementMethod()
-        contentView.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                noteEdited = true
-                btnEditSave.visibility = View.VISIBLE
-                btnDelete.visibility = View.INVISIBLE
-                note.content = contentView.text.toString()
-                dateTimeView.text = note.dateTimeString
-            }
-        })
+        contentView.apply {
+            setText(note.content)
+            setScroller(Scroller(context))
+            isVerticalScrollBarEnabled = true
+            movementMethod = ScrollingMovementMethod()
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {}
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    noteEdited = true
+                    btnEditSave.visibility = View.VISIBLE
+                    btnDelete.visibility = View.INVISIBLE
+                    note.content = contentView.text.toString()
+                    dateTimeView.text = note.dateTimeString
+                }
+            })
+        }
 
         btnEditSave.setOnClickListener {
             if (dbNote.update(note) != 0) {
