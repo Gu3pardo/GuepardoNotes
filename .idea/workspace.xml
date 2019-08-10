@@ -11,45 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4bee65ed-cb9a-4ce9-a7fe-216468bf1755" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/release/mobile-release.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/release/mobile-release.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/release/release/output.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/release/release/output.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAbout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAbout.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityEdit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityEdit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/list_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/side_add.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/side_add.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/side_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/side_details.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/layout/side_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/layout/side_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/mipmap-hdpi/leererpapierkorb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/mipmap-mdpi/leererpapierkorb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/mipmap-xhdpi/leererpapierkorb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/mipmap-xxhdpi/leererpapierkorb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values-de/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values-de/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/001_boot.png" beforeDir="false" afterPath="$PROJECT_DIR$/playstore/001_boot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/002_list.png" beforeDir="false" afterPath="$PROJECT_DIR$/playstore/002_list.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/002_list_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/003_details.png" beforeDir="false" afterPath="$PROJECT_DIR$/playstore/003_details.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/005_about.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/006_permission.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/007_floating_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/007_floating_window.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/playstore/graphic_functional.png" beforeDir="false" afterPath="$PROJECT_DIR$/playstore/graphic_functional.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/001_boot.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/001_boot.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/002_list.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/002_list.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/002_list_delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/003_details.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/003_details.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/003_details_share.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/004_new.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/005_about.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/006_permission.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/007_floating_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/007_floating_window.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/008_settings.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/header_001.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/header_001.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/header_002.png" beforeDir="false" afterPath="$PROJECT_DIR$/screenshots/header_002.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screenshots/header_003.png" beforeDir="false" />
     </list>
     <ignored path="MyNote.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -449,7 +410,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16791044" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -775,24 +736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAbout.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#3351#3380#1" expanded="true" />
-            <element signature="e#3471#3494#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAdd.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityBoot.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -832,6 +775,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mobile/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mobile/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -839,10 +789,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile/build.gradle">
+    <entry file="file://$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAbout.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="153">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile/src/main/java/guepardoapps/mynote/activities/ActivityAdd.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
